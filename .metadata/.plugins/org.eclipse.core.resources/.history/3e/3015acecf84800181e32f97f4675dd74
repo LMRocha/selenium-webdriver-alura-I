@@ -1,0 +1,35 @@
+package padraopageobjects;
+
+import org.junit.Before;
+import org.junit.Test;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
+
+public class DetalharLeilaoPage {
+	
+	WebDriver driver;
+	
+	@Before
+	public void inicializa(){
+		System.setProperty("webdriver.gecko.driver", "/opt/Browser/geckodriver");
+		this.driver = new FirefoxDriver();
+		this.driver.get("http://localhost:8080/apenas-teste/limpa");
+	}
+	
+		
+	@Test
+	public void preencheCampos(String usuario, String valor){
+		Select select =   this.driver.findElement(By.name("lance.usuario.id"));
+	}
+	
+	@Test
+	public void realizarLance(){
+		
+	}
+	
+	@Test
+	public void voltar(){
+		
+	}
+}

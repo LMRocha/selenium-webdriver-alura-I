@@ -1,0 +1,27 @@
+package padraopageobjects;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+
+public class NovoUsuarioPage {
+	
+	WebDriver driver;
+	
+	WebElement txtNome = driver.findElement(By.name("usuario.nome"));
+	WebElement txtEmail = driver.findElement(By.name("usuario.email"));
+	WebElement btSalvar = driver.findElement(By.id("btnSalvar"));
+	
+	
+	public void preencheCampos(String nome, String email){
+		this.txtNome.sendKeys(nome);
+		this.txtEmail.sendKeys(email);
+	}
+	
+	public void cadastra(String nome, String email){
+		this.preencheCampos(nome, email);
+		
+	}
+	
+
+}

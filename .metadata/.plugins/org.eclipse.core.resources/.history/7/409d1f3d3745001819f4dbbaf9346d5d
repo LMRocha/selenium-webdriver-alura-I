@@ -1,0 +1,14 @@
+package padraopageobjects;
+
+import org.openqa.selenium.WebDriver;
+
+public class NovoUsuarioPage {
+	
+	WebDriver driver;
+	
+	
+	public NovoUsuarioPage (WebDriver driver){
+		this.driver = driver;
+	}
+
+}

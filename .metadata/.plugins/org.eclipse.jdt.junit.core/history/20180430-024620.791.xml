@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?><testrun name="LeilaoTests" project="AluraSelenium" tests="3" started="3" failures="0" errors="0" ignored="0">
+  <testsuite name="leilao.LeilaoTests" time="34.634">
+    <testcase name="cadastraLeilaoSemNome" classname="leilao.LeilaoTests" time="11.417"/>
+    <testcase name="cadastraLeilaoSucesso" classname="leilao.LeilaoTests" time="11.878"/>
+    <testcase name="cadastraLeilaoSemValorInicial" classname="leilao.LeilaoTests" time="11.339"/>
+  </testsuite>
+</testrun>

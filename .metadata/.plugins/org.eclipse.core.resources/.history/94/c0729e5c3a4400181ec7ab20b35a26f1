@@ -1,0 +1,93 @@
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
+import org.openqa.selenium.By;
+import org.openqa.selenium.By.ByLinkText;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.firefox.FirefoxDriver;
+
+public class TesteAutomatizadoMelhorado {
+	
+	private WebDriver driver;
+	
+	@Before
+	public void inicializa(){
+		System.setProperty("webdriver.gecko.driver", "/opt/Browser/geckodriver");
+		driver = new FirefoxDriver();
+		driver.get("http://localhost:8080/usuarios/new");
+	}
+	
+	@Test
+	public void acessarPaginaNovoUsuario(){
+		driver.get("http://localhost:8080");
+		WebElement linkNovoUsuario = driver.findElement(By.linkText("Novo Usuário"));
+		linkNovoUsuario.click();
+		Boolean isUsuarioEntrouTelaCadastro = driver.getPageSource().contains("nome");
+		Assert.assertTrue(isUsuarioEntrouTelaCadastro);
+	}
+	
+	@Test
+	public void cadastraUsuarioComSucesso() {
+				
+		
+		WebElement campoNome = driver.findElement(By.name("usuario.nome"));
+		WebElement campoEmail = driver.findElement(By.name("usuario.email"));
+		WebElement botaoSalvar = driver.findElement(By.id("btnSalvar"));
+		
+		campoNome.sendKeys("Adriano Xavier");
+		campoEmail.sendKeys("axavier@empresa.com.br");
+		botaoSalvar.click();
+		
+		Boolean colunaNome = driver.findElement(By.xpath("//td[1]")).getText().contains("Adriano Xavier");
+		Boolean colunaEmail = driver.findElement(By.xpath("//td[2]")).getText().contains("axavier@empresa.com.br");
+		
+		Assert.assertTrue(colunaNome);
+		Assert.assertTrue(colunaEmail);
+		
+		driver.close();
+	}
+	
+	@Test
+	public void cadastraUsuarioSemPreencherCampoNome(){
+				
+		WebElement campoNome = driver.findElement(By.name("usuario.nome"));
+		WebElement campoEmail = driver.findElement(By.name("usuario.email"));
+		WebElement botaoSalvar = driver.findElement(By.id("btnSalvar"));
+		
+		campoNome.sendKeys("");
+		campoEmail.sendKeys("axavier@empresa.com.br");
+		botaoSalvar.click();
+		
+		Boolean msgErro = driver.getPageSource().contains("Nome obrigatorio!");
+		Assert.assertTrue(msgErro);
+		
+		driver.close();
+	}
+	
+	@Test
+	public void cadastrarUsuarioSemPreencherCamposObrigatórios(){
+		
+		WebElement campoNome = driver.findElement(By.name("usuario.nome"));
+		WebElement campoEmail = driver.findElement(By.name("usuario.email"));
+		WebElement botaoSalvar = driver.findElement(By.id("btnSalvar"));
+		
+		campoNome.sendKeys("");
+		campoEmail.sendKeys("");
+		botaoSalvar.click();
+		
+		Boolean msgErro1 = driver.getPageSource().contains("Nome obrigatorio!");
+		Boolean msgErro2 = driver.getPageSource().contains("E-mail obrigatorio!");
+
+		Assert.assertTrue(msgErro1 && msgErro2);
+		
+		driver.close();
+	}
+ 
+	@After
+	public void finaliza(){
+		driver.close();
+	}
+
+}

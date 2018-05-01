@@ -1,0 +1,27 @@
+package padraopageobjects;
+
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+import org.openqa.selenium.WebDriver;
+
+public class LeilaoTests {
+	
+	WebDriver driver;
+	
+	@Before
+	private void inicializa(){
+		
+	}
+	
+	@Test
+	public void cadastraLeilaoSucesso(){
+		
+	}
+	
+	@After
+	private void finaliza(){
+		
+	}
+
+}

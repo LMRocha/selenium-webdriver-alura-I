@@ -1,0 +1,14 @@
+package padraopageobjects;
+
+import org.openqa.selenium.WebDriver;
+
+public class LeilaoPage {
+	
+	WebDriver driver;
+	
+	public LeilaoPage(WebDriver driver){
+		this.driver = driver;
+	}
+	
+
+}

@@ -1,0 +1,19 @@
+package padraopageobjects;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+
+public class NovoUsuarioPage {
+	
+	WebDriver driver;
+	
+	WebElement nome = driver.findElement(By.name("usuario.nome"));
+	WebElement email = driver.findElement(By.name("usuario.email"));
+	
+	
+	public NovoUsuarioPage (WebDriver driver){
+		this.driver = driver;
+	}
+
+}

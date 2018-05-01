@@ -1,0 +1,52 @@
+package leilao;
+
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
+
+import usuario.NovoUsuarioPage;
+import usuario.UsuariosPage;
+
+public class LanceTests {
+	
+	WebDriver driver;
+
+	LeilaoPage leilao;
+	NovoLeilaoPage novoLeilao;
+	UsuariosPage usuario;
+	NovoUsuarioPage novoUsuario;
+	DetalharLeilaoPage detalharLeilao;
+
+	
+	@Before
+	public void inicializa(){
+		System.setProperty("webdriver.gecko.driver", "/opt/Browser/geckodriver");
+		
+		this.driver = new FirefoxDriver();
+		this.driver.get("http://localhost:8080/apenas-teste/limpa");
+		this.driver.get("http://localhost:8080/usuarios");
+		new UsuariosPage(driver).novo(this.driver).cadastra("Lauro Barbosa", "lauro.mrocha@gmail.com", this.driver);
+		new UsuariosPage(driver).novo(this.driver).cadastra("Andŕe Silveira Barbosa", "andre.silveria@gmail.com", this.driver);
+		this.driver.get("http://localhost:8080/leiloes");
+		new LeilaoPage(this.driver).novoLeilao(driver).cadastrarLeilao("Chevetão", "1500", true, "Lauro Barbosa", this.driver);
+		new LeilaoPage(this.driver).novoLeilao(driver).cadastrarLeilao("Opala", "3000", false, "Andŕe Silveira Barbosa", this.driver);
+		
+		new LeilaoPage(driver).navega("http://localhost:8080/leiloes");
+	}
+	
+	
+	@Test
+	public void realizaLanceComSucesso(){
+		this.leilao = new LeilaoPage(this.driver);
+		this.detalharLeilao = leilao.acaoExibir(this.leilao.recuperaLinhaGrid(this.leilao.getGridLeiloesCadastrados(), 1), this.driver);
+		this.detalharLeilao.realizarLance("Lauro Barbosa", "1200");
+	}
+	
+	@After
+	public void finaliza(){
+		this.driver.close();
+	}
+
+}

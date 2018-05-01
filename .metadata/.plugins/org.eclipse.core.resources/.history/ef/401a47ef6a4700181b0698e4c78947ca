@@ -1,0 +1,31 @@
+package padraopageobjects;
+
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
+
+public class LeilaoTests {
+	
+	WebDriver driver;
+	NovoLeilaoPage novoLeilao;
+	LeilaoPage leilao;
+	
+	@Before
+	private void inicializa(){
+		System.setProperty("webdriver.gecko.driver", "/opt/Browser/geckodriver");
+		this.driver = new FirefoxDriver();
+		this.leilao = new LeilaoPage(this.driver);
+	}
+	
+	@Test
+	public void cadastraLeilaoSucesso(){
+	}
+	
+	@After
+	private void finaliza(){
+		this.driver.close();
+	}
+
+}

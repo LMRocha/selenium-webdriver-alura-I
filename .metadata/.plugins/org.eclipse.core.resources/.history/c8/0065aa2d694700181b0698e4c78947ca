@@ -1,0 +1,103 @@
+package padraopageobjects;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.openqa.selenium.Alert;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+
+public class LeilaoPage {
+	
+	WebDriver driver;
+	
+	public LeilaoPage(WebDriver driver){
+		this.driver = driver;
+	}
+	
+	
+	// Métodos de tratamento de Grids
+
+		public List<WebElement> getGridLeiloesCadastrados() {
+			return driver.findElements(By.xpath("//table/tbody/tr[position()>1]"));
+		}
+
+		public List<WebElement> recuperaLinhaGrid(List<WebElement> grid, int elemento) {
+
+			List<WebElement> linha = new ArrayList<WebElement>();
+
+			if (!isGridVazia(grid)) {
+				linha.add(0, grid.get(elemento - 1).findElement(By.xpath("td[1]")));
+				linha.add(1, grid.get(elemento - 1).findElement(By.xpath("td[2]")));
+				linha.add(2, grid.get(elemento - 1).findElement(By.xpath("td[3]")));
+				linha.add(3, grid.get(elemento - 1).findElement(By.xpath("td[4]")));
+				linha.add(4, grid.get(elemento - 1).findElement(By.xpath("td[5]")));
+			}
+
+			return linha;
+		}
+		
+
+		public Boolean isGridVazia(List<WebElement> grid) {
+			Boolean flag;
+
+			if (grid.isEmpty()) {
+				flag = true;
+			} else {
+				flag = false;
+			}
+
+			return flag;
+		}
+		
+		public int retornaQtdeElementosGrid(List<WebElement> grid){
+			return grid.size();
+		}
+		
+		public List<WebElement> filtraElementoGrid(List<WebElement> grid,String nome,String dataAbertura, String valorInicial, String usuario, String usado){
+			
+			List<WebElement> linhaRecuperada = new ArrayList<WebElement>();
+			
+			if(!grid.isEmpty()){
+					
+				for (WebElement linha : grid) {
+					
+					if(linha.findElement(By.xpath("td[1]")).getText().contains(nome)){
+						linhaRecuperada.add(0,linha.findElement(By.xpath("td[1]")));
+						linhaRecuperada.add(1,linha.findElement(By.xpath("td[2]")));
+					}
+				}
+			}
+			
+			return linhaRecuperada;
+		}
+
+		public void realizarAcaoGrid(List<WebElement> linhaGridUsuario, String acao, WebDriver driver) throws InterruptedException {
+
+			if (!linhaGridUsuario.isEmpty()) {
+
+				switch (acao) {
+
+				case "editar":
+					linhaGridUsuario.get(2).findElement(By.xpath("a[2]")).click();
+					break;
+
+				case "visualizar":
+					linhaGridUsuario.get(2).findElement(By.xpath("a[1]")).click();
+					break;
+
+				case "excluir":
+					linhaGridUsuario.get(2).findElement(By.xpath("form/button")).click();
+					Alert alert = driver.switchTo().alert();
+					alert.accept();
+					Thread.sleep(2000);
+					break;
+				}
+			}
+
+		}
+	
+	
+
+}

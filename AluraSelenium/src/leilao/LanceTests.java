@@ -1,0 +1,45 @@
+package leilao;
+
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
+
+import usuario.NovoUsuarioPage;
+import usuario.UsuariosPage;
+import utils.GeraMassaDados;
+
+public class LanceTests {
+	
+	WebDriver driver;
+
+	LeilaoPage leilao;
+	NovoLeilaoPage novoLeilao;
+	UsuariosPage usuario;
+	NovoUsuarioPage novoUsuario;
+	DetalharLeilaoPage detalharLeilao;
+
+	
+	@Before
+	public void inicializa(){
+		System.setProperty("webdriver.gecko.driver", "/opt/Browser/geckodriver");
+		this.driver = new FirefoxDriver();
+		new GeraMassaDados(this.driver);
+		new LeilaoPage(driver).navega("http://localhost:8080/leiloes");
+	}
+	
+	
+	@Test
+	public void realizaLanceComSucesso(){
+		this.leilao = new LeilaoPage(this.driver);
+		this.detalharLeilao = leilao.acaoExibir(this.leilao.recuperaLinhaGrid(this.leilao.getGridLeiloesCadastrados(), 1), this.driver);
+		this.detalharLeilao.realizarLance("Renan Sérgio Nunes", "1200");
+	}
+	
+	@After
+	public void finaliza(){
+		this.driver.close();
+	}
+
+}

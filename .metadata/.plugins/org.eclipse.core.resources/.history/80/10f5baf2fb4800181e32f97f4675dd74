@@ -1,0 +1,56 @@
+package padraopageobjects;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.junit.Before;
+import org.junit.Test;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.support.ui.Select;
+
+public class DetalharLeilaoPage {
+	
+	WebDriver driver;
+	
+	@Before
+	public void inicializa(){
+		System.setProperty("webdriver.gecko.driver", "/opt/Browser/geckodriver");
+		this.driver = new FirefoxDriver();
+		this.driver.get("http://localhost:8080/apenas-teste/limpa");
+		new UsuariosPage(driver).novo(driver).cadastra("Lauro Barbosa", "lauro.mrocha@gmail.com", driver);
+		new UsuariosPage(driver).novo(driver).cadastra("Andŕe Silveira Barbosa", "andre.silveria@gmail.com", driver);
+	}
+		
+	@Test
+	public void preencheCampos(String usuario, String valor){
+		Select select = new Select(this.driver.findElement(By.name("lance.usuario.id")));
+		select.selectByVisibleText(usuario);
+		this.driver.findElement(By.name("lance.valor")).sendKeys(valor);
+	}
+	
+	@Test
+	public void realizarLance(String usuario, String valor){
+		this.preencheCampos(usuario, valor);
+		this.driver.findElement(By.id("btnDarLance")).click();
+	}
+	
+	@Test
+	public void voltar(){
+		
+	}
+	
+	public List<WebElement> getGridLances(){
+		return this.driver.findElements(By.xpath("//table/tr/td"));
+	}
+	
+	public List<WebElement> getUltimoRegistroLance(List<WebElement> grid){
+		List<WebElement> celulaLinha = new ArrayList<WebElement>();
+		celulaLinha.add(0,grid.get(grid.size()).findElement(By.xpath("td[1]")));
+		celulaLinha.add(1,grid.get(grid.size()).findElement(By.xpath("td[2]")));
+		celulaLinha.add(2,grid.get(grid.size()).findElement(By.xpath("td[3]")));
+		return celulaLinha;
+	} 
+}

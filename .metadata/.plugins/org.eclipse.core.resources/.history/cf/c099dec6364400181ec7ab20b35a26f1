@@ -1,0 +1,44 @@
+import org.junit.Assert;
+import org.junit.Test;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
+
+public class TesteAutomatizado {
+	
+	@Test
+	public void cadastraUsuarioComSucesso() {
+		
+		System.setProperty("webdriver.gecko.driver", "/opt/Browser/geckodriver");
+		//System.setProperty("webdriver.chrome.driver", "/opt/Browser/chromedriver");
+
+		WebDriver driver = new FirefoxDriver();
+		//WebDriver driver = new ChromeDriver();
+		
+		driver.get("http://localhost:8080/usuarios/new");
+		
+		WebElement campoNome = driver.findElement(By.name("usuario.nome"));
+		WebElement campoEmail = driver.findElement(By.name("usuario.email"));
+		WebElement botaoSalvar = driver.findElement(By.id("btnSalvar"));
+		
+		campoNome.sendKeys("Adriano Xavier");
+		campoEmail.sendKeys("axavier@empresa.com.br");
+		botaoSalvar.click();
+		
+		Boolean colunaNome = driver.findElement(By.xpath("//td[1]")).getText().contains("Adriano Xavier");
+		Boolean colunaEmail = driver.findElement(By.xpath("//td[2]")).getText().contains("axavier@empresa.com.br");
+		
+		Assert.assertTrue(colunaNome);
+		Assert.assertTrue(colunaEmail);
+		
+		driver.close();
+	}
+	
+	@Test
+	public void cadastraUsuarioSemPreencherCampoObrigatorio(){
+		
+	}
+
+}

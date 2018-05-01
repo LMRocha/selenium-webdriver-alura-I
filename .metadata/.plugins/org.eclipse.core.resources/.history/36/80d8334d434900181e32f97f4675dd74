@@ -1,0 +1,114 @@
+package utils;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.openqa.selenium.WebDriver;
+
+import padraopageobjects.LeilaoPage;
+import padraopageobjects.NovoLeilaoPage;
+import padraopageobjects.NovoUsuarioPage;
+import padraopageobjects.UsuariosPage;
+
+public class GeraMassaDados {
+	
+	private WebDriver driver;
+	private String urlUsuarios = "http://localhost:8080/usuarios";
+	private String urlLeiloes = "http://localhost:8080/leiloes";
+	private NovoUsuarioPage novoUsuarioPage;
+	private NovoLeilaoPage novoLeilaoPage;
+	
+	private List<Usuarios> listaUsuarios = new ArrayList<Usuarios>();
+	private List<Leiloes> listaLeiloes = new ArrayList<Leiloes>();
+	
+	
+	public GeraMassaDados (WebDriver driver){
+		this.driver = driver;
+	}
+	
+	private void gerarUsuarios(List<Usuarios> usuarios, WebDriver driver){
+		driver.get(urlUsuarios);
+		for (Usuarios u : usuarios) {
+			novoUsuarioPage = new UsuariosPage(driver).novo(driver);
+			novoUsuarioPage.cadastra(u.nome, u.email, driver);	
+		}
+	}
+	
+	private void gerarLeiloes(List<Leiloes> leiloes, WebDriver driver){
+		driver.get(urlLeiloes);
+		for (Leiloes l : leiloes) {
+			novoLeilaoPage = new LeilaoPage(driver).novoLeilao(driver);
+			novoLeilaoPage.cadastrarLeilao(l.nome, l.valorInicial, l.usado, l.usuario, driver);
+		}	
+	}
+
+	private void montaObjetos(){
+		Usuarios usuario1 = new Usuarios("Renan Sérgio Nunes","renansergionunes@terrabrasil.com.br");
+		Usuarios usuario2 = new Usuarios("Erick Danilo Antonio Barbosa","erickdaniloantoniobarbosa@drimenezes.com");
+		Usuarios usuario3 = new Usuarios("Giovanni Anthony Rodrigues","giovannianthonyrodrigues_@dprf.gov.br");
+		Usuarios usuario4 = new Usuarios("André Bryan Mendes","andrebryanmendes-72@seraobenedito.com.br");
+		Usuarios usuario5 = new Usuarios("Luan Davi Marcelo Pires","lluandavimarcelopires@raffinimobiliario.com.br");
+	}
+
+	public void run(){
+		
+	
+	}
+
+}
+
+class Usuarios {
+	String nome;
+	String email;
+	
+	public Usuarios(String nome, String email) {
+		this.nome = nome;
+		this.email = email;
+	}
+	
+	public String getNome(){
+		return this.nome;
+	}
+	
+	public String getEmail(){
+		return this.email;
+	}
+	
+}
+
+class Leiloes {
+	String nome;
+	String valorInicial;
+	String usuario;
+	Boolean usado;
+	
+	 
+	public String getNome() {
+		return nome;
+	}
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
+	
+	public String getValorInicial() {
+		return valorInicial;
+	}
+	public void setValorInicial(String valorInicial) {
+		this.valorInicial = valorInicial;
+	}
+	
+	public String getUsuario() {
+		return usuario;
+	}
+	public void setUsuario(String usuario) {
+		this.usuario = usuario;
+	}
+	
+	public Boolean getUsado() {
+		return usado;
+	}
+	public void setUsado(Boolean usado) {
+		this.usado = usado;
+	}
+	
+}

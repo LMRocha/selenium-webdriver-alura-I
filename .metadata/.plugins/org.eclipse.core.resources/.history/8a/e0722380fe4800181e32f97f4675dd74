@@ -1,0 +1,36 @@
+package padraopageobjects;
+
+import org.junit.After;
+import org.junit.Before;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
+
+public class LanceTests {
+	
+	WebDriver driver;
+	
+	@Before
+	public void inicializa(){
+		System.setProperty("webdriver.gecko.driver", "/opt/Browser/geckodriver");
+		this.driver = new FirefoxDriver();
+		this.driver.get("http://localhost:8080/apenas-teste/limpa");
+		this.driver.get("http://localhost:8080/usuarios");
+		new UsuariosPage(driver).novo(this.driver).cadastra("Lauro Barbosa", "lauro.mrocha@gmail.com", this.driver);
+		new UsuariosPage(driver).novo(this.driver).cadastra("Andŕe Silveira Barbosa", "andre.silveria@gmail.com", this.driver);
+		this.driver.get("http://localhost:8080/leiloes");
+		new LeilaoPage(this.driver).novoLeilao(driver).cadastrarLeilao("Chevetão", "1500", true, "Lauro", this.driver);
+		new LeilaoPage(this.driver).novoLeilao(driver).cadastrarLeilao("Opala", "3000", false, "André", this.driver);
+	}
+	
+	
+	@Test
+	public void realizaLanceComSucesso(){
+		
+	}
+	
+	@After
+	public void finaliza(){
+		this.driver.close();
+	}
+
+}

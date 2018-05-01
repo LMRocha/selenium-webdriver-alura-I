@@ -1,0 +1,112 @@
+package utils;
+
+import java.util.List;
+
+import org.openqa.selenium.WebDriver;
+
+import padraopageobjects.LeilaoPage;
+import padraopageobjects.NovoLeilaoPage;
+import padraopageobjects.NovoUsuarioPage;
+import padraopageobjects.UsuariosPage;
+
+public class GeraMassaDados {
+	
+	WebDriver driver;
+	String urlUsuarios = "http://localhost:8080/usuarios";
+	String urlLeiloes = "http://localhost:8080/leiloes";
+	NovoUsuarioPage novoUsuarioPage;
+	NovoLeilaoPage novoLeilaoPage;
+	
+	
+	public GeraMassaDados (WebDriver driver){
+		this.driver = driver;
+	}
+	
+	public void gerarUsuarios(List<Usuarios>, WebDriver driver){
+		
+		driver.get(urlUsuarios);
+		
+		for(int i = 0; i<qtdeRegistros; i++){
+			novoUsuarioPage = new UsuariosPage(driver).novo(driver);
+			novoUsuarioPage.cadastra(nome.get(i), email.get(i), driver);
+		}
+	}
+	
+public void gerarLeiloes(List<Leiloes> leiloes, WebDriver driver){
+		
+		driver.get(urlLeiloes);
+	
+		for (Leiloes l : leiloes) {
+			novoLeilaoPage = new LeilaoPage(driver).novoLeilao(driver);
+			novoLeilaoPage.cadastrarLeilao(l.nome, l.valorInicial, l.usado, l.usuario, driver);
+		}
+		
+		
+	}
+
+
+public void run(){
+	
+
+}
+
+}
+
+class Usuarios {
+	String nome;
+	String email;
+	
+	public void setNome(String nome){
+		this.nome = nome;
+	}
+	
+	public void setEmail(String email){
+		this.email = email;
+	}
+	
+	public String getNome(){
+		return this.nome;
+	}
+	
+	public String getEmail(){
+		return this.email;
+	}
+	
+}
+
+class Leiloes {
+	String nome;
+	String valorInicial;
+	String usuario;
+	Boolean usado;
+	
+	 
+	public String getNome() {
+		return nome;
+	}
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
+	
+	public String getValorInicial() {
+		return valorInicial;
+	}
+	public void setValorInicial(String valorInicial) {
+		this.valorInicial = valorInicial;
+	}
+	
+	public String getUsuario() {
+		return usuario;
+	}
+	public void setUsuario(String usuario) {
+		this.usuario = usuario;
+	}
+	
+	public Boolean getUsado() {
+		return usado;
+	}
+	public void setUsado(Boolean usado) {
+		this.usado = usado;
+	}
+	
+}

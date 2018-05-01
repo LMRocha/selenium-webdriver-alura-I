@@ -1,0 +1,27 @@
+package padraopageobjects;
+
+import org.apache.bcel.generic.Select;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+
+public class NovoLeilaoPage {
+	
+	private WebDriver driver;
+	private LeilaoPage leilaoPage;
+	
+	public NovoLeilaoPage(WebDriver driver){
+		this.driver = driver;
+	}
+	
+	public void preencherFormulario(String nome, String valorInicial, Boolean usado, String usuario){
+		
+		WebElement txtNome = this.driver.findElement(By.name("leilao.nome"));
+		WebElement txtValorInicial = this.driver.findElement(By.name("leilao.valorInicial"));
+		Select cbUsuario = this.driver.findElement(By.name("leilao.valorInicial"));
+		
+		
+	}
+	
+
+}
